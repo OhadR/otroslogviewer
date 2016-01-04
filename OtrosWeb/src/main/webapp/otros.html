@@ -2,6 +2,7 @@
 <html>
 <head>
 
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!--jQuery dependencies-->
 	<link rel="stylesheet"
 	     href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/themes/base/jquery-ui.css" />
@@ -10,13 +11,11 @@
 
 	<script type="text/javascript" src="./JS/weblogger.js"></script>
 	 
-	 <!--Include Touch Punch file to provide support for touch devices>
-	 <script type="text/javascript" src="path to touch-punch.js" ></script-->   
-	 
-	 <!--ParamQuery Grid files-->
-	 <link rel="stylesheet" href="paramquery_grid/pqgrid.dev.css" />
-	 <link rel="stylesheet" href="paramquery_grid/some.css" />
-	 <script type="text/javascript" src="paramquery_grid/pqgrid.min.js" ></script>  
+	 <link rel="stylesheet" href="./CSS/mars.css">
+	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+	 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 	 
 	 
 	 <meta charset="ISO-8859-1">
@@ -24,9 +23,42 @@
 </head>
 
 <body>
-	<div id="grid_array"></div>
+  <div id="moshe" class="lyrics">
+  <table class="table table-hover" id="tab_logic">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>timestamp</th>
+        <th>level</th>
+        <th>message</th>
+        <th>thread</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="success">
+        <td>John</td>
+        <td>Doe</td>
+        <td>john@example.com</td>
+      </tr>
+      <tr class="danger">
+        <td>Mary</td>
+        <td>Moe</td>
+        <td>mary@example.com</td>
+      </tr>
+      <tr class="info">
+        <td>July</td>
+        <td>Dooley</td>
+        <td>july@example.com</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
 	<button onclick="getLogDataFromOtros()">Click me</button></body>
 	
 	<a href="#" onclick="performClick('theFile');">Open file dialog</a>
 	<input type="file" id="theFile" />	
+	
+	<a id="add_row" class="btn btn-default pull-left">Add Row</a>
+	
 </html>

@@ -1,0 +1,13 @@
+.lyrics{
+ font-family:Arial;
+ overflow:scroll;
+}
+
+.lyric_line{
+ border:solid 1px;
+ text-align:center;    
+}
+.lyrics{
+ height:700px;
+}
+

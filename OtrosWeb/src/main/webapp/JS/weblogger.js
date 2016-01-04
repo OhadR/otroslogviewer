@@ -5,27 +5,52 @@ var set_log_file_url = 	'./secured/setLogFile';
 var myVar = setInterval(getLogDataFromOtros, 4000);
 var logFileToTail;
 
+var tableRowCounter=1;
+
+$(function(){
+
+     $("#add_row").click(function()
+	 {
+		 addRowToGrid('ff');
+//      $('#addr'+i).html("<td>"+ (i+1) +"</td><td><input name='name"+i+"' type='text' placeholder='Name' class='form-control input-md'  /> </td><td><input  name='mail"+i+"' type='text' placeholder='Mail'  class='form-control input-md'></td><td><input  name='mobile"+i+"' type='text' placeholder='Mobile'  class='form-control input-md'></td>");
+
+	});
+	
+});	 
+
+function addRowToGrid(date, 
+					level,
+					message,
+					clazz,
+					thread)
+{
+      //fallback:
+	 /* $('#addr'+tableRowCounter).html("<td>"+ (tableRowCounter+1) +"</td><td><input name='name"+tableRowCounter+"' type='text' placeholder='Name' class='form-control input-md'  /> </td><td><input  name='mail"+tableRowCounter+"' type='text' placeholder='Mail'  class='form-control input-md'></td><td><input  name='mobile"+tableRowCounter+"' type='text' placeholder='Mobile'  class='form-control input-md'></td>");
+
+      $('#tab_logic').append('<tr id="addr'+(tableRowCounter+1)+'"></tr>');
+      tableRowCounter++; */
+
+
+	if(level == 'ERROR')
+	{
+		$('#tab_logic').append('<tr class="danger" id="tr_id_'+ tableRowCounter +'"></tr>');
+	}
+	else
+	{
+		$('#tab_logic').append('<tr id="tr_id_'+ (tableRowCounter) +'"></tr>');
+	}
+	$('#tr_id_' + tableRowCounter).html("<td>"+  tableRowCounter +"</td><td>" + date + "</td><td>" + level + "</td><td>" + message + "</td><td>" + thread + "</td>");
+	++tableRowCounter; 
+	
+}
 
 $(function(){
     var data = [ [1,'Exxon Mobil','339,938.0','ssss', '36,130.0'],
             [2,'Wal-Mart Stores','315,654.0','11,231.0'],
             [3,'Royal Dutch Shell','306,731.0','25,311.0'],
-            [4,'BP','267,600.0','22,341.0'],
-            [5,'General Motors','192,604.0','-10,567.0'],
-            [6,'Chevron','189,481.0','14,099.0'],
-            [7,'DaimlerChrysler','186,106.3','3,536.3'],
-            [8,'Toyota Motor','185,805.0','12,119.6'],
             [9,'Ford Motor','177,210.0','2,024.0', 'red'],
             [10,'ConocoPhillips','166,683.0','13,529.0'],
             [11,'General Electric','157,153.0','16,353.0'],         
-            [12,'Total','152,360.7','15,250.0'],                
-            [13,'ING Group','138,235.3','8,958.9'],
-            [14,'Citigroup','131,045.0','24,589.0'],
-            [15,'AXA','129,839.2','5,186.5'],
-            [16,'Allianz','121,406.0','5,442.4'],
-            [17,'Volkswagen','118,376.6','1,391.7'],
-            [18,'Fortis','112,351.4','4,896.3'],
-            [19,'Crédit Agricole','110,764.6','7,434.3'],
             [20,'American Intl. Group','108,905.0','10,477.0']
 			];
              
@@ -48,9 +73,6 @@ $(function(){
             return { style: "background:red;" };
         }
     },*/
-    $("#grid_array").pqGrid( obj );                                
-
-    $("#grid_array").pqGrid( {editable:false} );		
  
 });
 
@@ -81,26 +103,17 @@ function populateResult(response)
 	{
 		var obj = logDataArray[i];
 
-		if(obj.level.name == 'ERROR')
-		{
-			var innn = '5';
-		}
-		var index = $( "#grid_array" ).pqGrid( "addRow", 
-			    {rowData:  [obj.date, 
-			                obj.level.name,
-			                obj.message,
-			                obj.clazz,
-			                obj.thread] 
-			    }
-			);
-	
+		addRowToGrid( obj.date, 
+					obj.level.name,
+					obj.message,
+					obj.clazz,
+					obj.thread);
+
+		scrollToBottom();
 	}
+	
 
-	//select last row to scroll down:
-	$( "#grid_array" ).pqGrid( "setSelection", {rowIndx:index} );
-
-
-}
+};
 
 //Test
 function addLineToGrid() 
@@ -145,4 +158,10 @@ function setLogDataToTail()
 			populateResult(response);
 		}
 	});
+};
+
+function scrollToBottom(){
+	$('#moshe').scrollTop(1000000);
+
+   
 }
