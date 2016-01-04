@@ -1,0 +1,131 @@
+2015-12-27 00:00:00,019 [quartzSchedulerFactory_Worker-30] [INFO ] [com.who.tlv.mars.core.scheduler.SchedulerQuartzJob:60] - task name:RegisterVegasItalyNoDepositPlayersTask
+2015-12-27 00:00:00,019 [quartzSchedulerFactory_Worker-11] [INFO ] [com.who.tlv.mars.core.scheduler.SchedulerQuartzJob:60] - task name:RegisterVegasItalyFirstDepositPlayersTask
+2015-12-27 00:00:00,019 [quartzSchedulerFactory_Worker-47] [INFO ] [com.who.tlv.mars.core.scheduler.SchedulerQuartzJob:60] - task name:RegisterVegasItalyAdHocDepositPlayersTask
+2015-12-27 00:00:00,019 [quartzSchedulerFactory_Worker-42] [INFO ] [com.who.tlv.mars.core.scheduler.SchedulerQuartzJob:60] - task name:PaymentsUpdateTask
+2015-12-27 00:00:00,019 [quartzSchedulerFactory_Worker-1] [INFO ] [com.who.tlv.mars.core.scheduler.SchedulerQuartzJob:60] - task name:PaymentsReaderTask
+2015-12-27 00:00:00,028 [quartzSchedulerFactory_Worker-13] [INFO ] [com.who.tlv.mars.core.scheduler.SchedulerQuartzJob:60] - task name:GetVegasItalyCrmPlayersTask
+2015-12-27 00:00:00,208 [quartzSchedulerFactory_Worker-11] [DEBUG] [com.who.tlv.mars.services.bonusengine.readers.DepositsReader:101] - DepositsReader.beforeStep started.
+2015-12-27 00:00:00,212 [quartzSchedulerFactory_Worker-18] [DEBUG] [com.who.tlv.mars.services.poker.players.GetCurrencyRates:59] - Started getting currency.
+2015-12-27 00:00:00,224 [quartzSchedulerFactory_Worker-47] [DEBUG] [com.who.tlv.mars.services.bonusengine.readers.DepositsReader:101] - DepositsReader.beforeStep started.
+2015-12-27 00:00:00,248 [quartzSchedulerFactory_Worker-1] [INFO ] [com.who.tlv.mars.services.payments.readers.PaymentsTransactionIntervalReader:127] - About to execute reader for task. taskName: PaymentsReaderTask , serviceName:PaymentsReaderService
+2015-12-27 00:00:00,249 [quartzSchedulerFactory_Worker-1] [INFO ] [com.who.tlv.mars.services.payments.readers.PaymentsTransactionIntervalReader:149] - Task Parameters:measurement:day, interval:1, transactionsInChunk:1500
+2015-12-27 00:00:00,257 [quartzSchedulerFactory_Worker-11] [INFO ] [com.who.tlv.mars.core.readers.AReader:80] - About to execute reader for task. taskName: RegisterVegasItalyFirstDepositPlayersTask , readerName:VegasItalyReader , serviceName:ItalyVegasBonusService , marsTaskId: 449818 , numberOfTaskParameters: 4
+2015-12-27 00:00:00,261 [quartzSchedulerFactory_Worker-13] [ERROR] [com.who.tlv.mars.services.crm.GetCrmPlayersTask:107] - Failed to get file list from folder. folderName: /home/mars_sftp/MARS/data/neolanemars/vegas/italy
+com.who.tlv.foundation.ftp.WHOFtpException: Failed adding private key "/var/lib/jenkins/slaves/workspace/MarketingServices_DeployToQA/Project/Build/Deployment/Product/MarketingServices/webapps/MARS/WEB-INF/classes/privatekeys/mars_sftp_pp1_prvt.der": java.io.FileNotFoundException: /var/lib/jenkins/slaves/workspace/MarketingServices_DeployToQA/Project/Build/Deployment/Product/MarketingServices/webapps/MARS/WEB-INF/classes/privatekeys/mars_sftp_pp1_prvt.der (No such file or directory)
+	at com.who.tlv.foundation.ftp.SftpClient.connect(SftpClient.java:82) ~[who-foundation-8.0.0-SNAPSHOT.jar:na]
+	at com.who.tlv.foundation.ftp.FtpManager.getFileList(FtpManager.java:366) ~[who-foundation-8.0.0-SNAPSHOT.jar:na]
+	at com.who.tlv.mars.services.crm.GetCrmPlayersTask.execute(GetCrmPlayersTask.java:101) ~[who-marketing-services-8.0.0-SNAPSHOT.jar:na]
+	at org.springframework.batch.core.step.tasklet.TaskletStep$ChunkTransactionCallback.doInTransaction(TaskletStep.java:406) [spring-batch-core-3.0.5.RELEASE.jar:3.0.5.RELEASE]
+	at org.springframework.batch.core.step.tasklet.TaskletStep$ChunkTransactionCallback.doInTransaction(TaskletStep.java:330) [spring-batch-core-3.0.5.RELEASE.jar:3.0.5.RELEASE]
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:133) [spring-tx-4.1.6.RELEASE.jar:4.1.6.RELEASE]
+	at org.springframework.batch.core.step.tasklet.TaskletStep$2.doInChunkContext(TaskletStep.java:271) [spring-batch-core-3.0.5.RELEASE.jar:3.0.5.RELEASE]
+	at org.springframework.batch.core.scope.context.StepContextRepeatCallback.doInIteration(StepContextRepeatCallback.java:81) [spring-batch-core-3.0.5.RELEASE.jar:3.0.5.RELEASE]
+	at org.springframework.batch.repeat.support.RepeatTemplate.getNextResult(RepeatTemplate.java:374) [spring-batch-infrastructure-3.0.5.RELEASE.jar:3.0.5.RELEASE]
+	at org.springframework.batch.repeat.support.RepeatTemplate.executeInternal(RepeatTemplate.java:215) [spring-batch-infrastructure-3.0.5.RELEASE.jar:3.0.5.RELEASE]
+	at org.springframework.batch.repeat.support.RepeatTemplate.iterate(RepeatTemplate.java:144) [spring-batch-infrastructure-3.0.5.RELEASE.jar:3.0.5.RELEASE]
+	at org.springframework.batch.core.step.tasklet.TaskletStep.doExecute(TaskletStep.java:257) [spring-batch-core-3.0.5.RELEASE.jar:3.0.5.RELEASE]
+	at org.springframework.batch.core.step.AbstractStep.execute(AbstractStep.java:200) [spring-batch-core-3.0.5.RELEASE.jar:3.0.5.RELEASE]
+	at org.springframework.batch.core.job.SimpleStepHandler.handleStep(SimpleStepHandler.java:148) [spring-batch-core-3.0.5.RELEASE.jar:3.0.5.RELEASE]
+	at org.springframework.batch.core.job.flow.JobFlowExecutor.executeStep(JobFlowExecutor.java:64) [spring-batch-core-3.0.5.RELEASE.jar:3.0.5.RELEASE]
+	at org.springframework.batch.core.job.flow.support.state.StepState.handle(StepState.java:67) [spring-batch-core-3.0.5.RELEASE.jar:3.0.5.RELEASE]
+	at org.springframework.batch.core.job.flow.support.SimpleFlow.resume(SimpleFlow.java:169) [spring-batch-core-3.0.5.RELEASE.jar:3.0.5.RELEASE]
+	at org.springframework.batch.core.job.flow.support.SimpleFlow.start(SimpleFlow.java:144) [spring-batch-core-3.0.5.RELEASE.jar:3.0.5.RELEASE]
+	at org.springframework.batch.core.job.flow.FlowJob.doExecute(FlowJob.java:134) [spring-batch-core-3.0.5.RELEASE.jar:3.0.5.RELEASE]
+	at org.springframework.batch.core.job.AbstractJob.execute(AbstractJob.java:306) [spring-batch-core-3.0.5.RELEASE.jar:3.0.5.RELEASE]
+	at org.springframework.batch.core.launch.support.SimpleJobLauncher$1.run(SimpleJobLauncher.java:135) [spring-batch-core-3.0.5.RELEASE.jar:3.0.5.RELEASE]
+	at org.springframework.core.task.SyncTaskExecutor.execute(SyncTaskExecutor.java:50) [spring-core-4.1.6.RELEASE.jar:4.1.6.RELEASE]
+	at org.springframework.batch.core.launch.support.SimpleJobLauncher.run(SimpleJobLauncher.java:128) [spring-batch-core-3.0.5.RELEASE.jar:3.0.5.RELEASE]
+	at com.who.tlv.mars.core.taskmanager.TaskExecutor.runTask(TaskExecutor.java:238) [who-mars-core-8.0.0-SNAPSHOT.jar:na]
+	at com.who.tlv.mars.core.taskmanager.TaskExecutor.runTask(TaskExecutor.java:436) [who-mars-core-8.0.0-SNAPSHOT.jar:na]
+	at com.who.tlv.mars.core.scheduler.SchedulerQuartzJob.executeInternal(SchedulerQuartzJob.java:78) [who-mars-core-8.0.0-SNAPSHOT.jar:na]
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75) [spring-context-support-4.1.6.RELEASE.jar:4.1.6.RELEASE]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213) [quartz-2.1.7.jar:na]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:557) [quartz-2.1.7.jar:na]
+Caused by: com.jcraft.jsch.JSchException: java.io.FileNotFoundException: /var/lib/jenkins/slaves/workspace/MarketingServices_DeployToQA/Project/Build/Deployment/Product/MarketingServices/webapps/MARS/WEB-INF/classes/privatekeys/mars_sftp_pp1_prvt.der (No such file or directory)
+	at com.jcraft.jsch.IdentityFile.newInstance(IdentityFile.java:98) ~[jsch-0.1.48.jar:na]
+	at com.jcraft.jsch.JSch.addIdentity(JSch.java:355) ~[jsch-0.1.48.jar:na]
+	at com.jcraft.jsch.JSch.addIdentity(JSch.java:315) ~[jsch-0.1.48.jar:na]
+	at com.who.tlv.foundation.ftp.SftpClient.connect(SftpClient.java:78) ~[who-foundation-8.0.0-SNAPSHOT.jar:na]
+	... 28 common frames omitted
+Caused by: java.io.FileNotFoundException: /var/lib/jenkins/slaves/workspace/MarketingServices_DeployToQA/Project/Build/Deployment/Product/MarketingServices/webapps/MARS/WEB-INF/classes/privatekeys/mars_sftp_pp1_prvt.der (No such file or directory)
+	at java.io.FileInputStream.open0(Native Method) ~[na:1.8.0_65]
+	at java.io.FileInputStream.open(FileInputStream.java:195) ~[na:1.8.0_65]
+	at java.io.FileInputStream.<init>(FileInputStream.java:138) ~[na:1.8.0_65]
+	at java.io.FileInputStream.<init>(FileInputStream.java:93) ~[na:1.8.0_65]
+	at com.jcraft.jsch.IdentityFile.newInstance(IdentityFile.java:83) ~[jsch-0.1.48.jar:na]
+	... 31 common frames omitted
+2015-12-27 00:00:00,263 [quartzSchedulerFactory_Worker-13] [ERROR] [org.springframework.batch.core.step.AbstractStep:229] - Encountered an error executing step step0-getVegasItalyCrmPlayers in job GetVegasItalyCrmPlayersTask
+com.who.tlv.mars.core.exception.TaskExecutionException: Failed to get file list from folder. folderName: /home/mars_sftp/MARS/data/neolanemars/vegas/italy
+	at com.who.tlv.mars.services.crm.GetCrmPlayersTask.execute(GetCrmPlayersTask.java:108) ~[who-marketing-services-8.0.0-SNAPSHOT.jar:na]
+	at org.springframework.batch.core.step.tasklet.TaskletStep$ChunkTransactionCallback.doInTransaction(TaskletStep.java:406) ~[spring-batch-core-3.0.5.RELEASE.jar:3.0.5.RELEASE]
+	at org.springframework.batch.core.step.tasklet.TaskletStep$ChunkTransactionCallback.doInTransaction(TaskletStep.java:330) ~[spring-batch-core-3.0.5.RELEASE.jar:3.0.5.RELEASE]
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:133) ~[spring-tx-4.1.6.RELEASE.jar:4.1.6.RELEASE]
+	at org.springframework.batch.core.step.tasklet.TaskletStep$2.doInChunkContext(TaskletStep.java:271) ~[spring-batch-core-3.0.5.RELEASE.jar:3.0.5.RELEASE]
+	at org.springframework.batch.core.scope.context.StepContextRepeatCallback.doInIteration(StepContextRepeatCallback.java:81) ~[spring-batch-core-3.0.5.RELEASE.jar:3.0.5.RELEASE]
+	at org.springframework.batch.repeat.support.RepeatTemplate.getNextResult(RepeatTemplate.java:374) ~[spring-batch-infrastructure-3.0.5.RELEASE.jar:3.0.5.RELEASE]
+	at org.springframework.batch.repeat.support.RepeatTemplate.executeInternal(RepeatTemplate.java:215) ~[spring-batch-infrastructure-3.0.5.RELEASE.jar:3.0.5.RELEASE]
+	at org.springframework.batch.repeat.support.RepeatTemplate.iterate(RepeatTemplate.java:144) ~[spring-batch-infrastructure-3.0.5.RELEASE.jar:3.0.5.RELEASE]
+	at org.springframework.batch.core.step.tasklet.TaskletStep.doExecute(TaskletStep.java:257) ~[spring-batch-core-3.0.5.RELEASE.jar:3.0.5.RELEASE]
+	at org.springframework.batch.core.step.AbstractStep.execute(AbstractStep.java:200) ~[spring-batch-core-3.0.5.RELEASE.jar:3.0.5.RELEASE]
+	at org.springframework.batch.core.job.SimpleStepHandler.handleStep(SimpleStepHandler.java:148) [spring-batch-core-3.0.5.RELEASE.jar:3.0.5.RELEASE]
+	at org.springframework.batch.core.job.flow.JobFlowExecutor.executeStep(JobFlowExecutor.java:64) [spring-batch-core-3.0.5.RELEASE.jar:3.0.5.RELEASE]
+	at org.springframework.batch.core.job.flow.support.state.StepState.handle(StepState.java:67) [spring-batch-core-3.0.5.RELEASE.jar:3.0.5.RELEASE]
+	at org.springframework.batch.core.job.flow.support.SimpleFlow.resume(SimpleFlow.java:169) [spring-batch-core-3.0.5.RELEASE.jar:3.0.5.RELEASE]
+	at org.springframework.batch.core.job.flow.support.SimpleFlow.start(SimpleFlow.java:144) [spring-batch-core-3.0.5.RELEASE.jar:3.0.5.RELEASE]
+	at org.springframework.batch.core.job.flow.FlowJob.doExecute(FlowJob.java:134) [spring-batch-core-3.0.5.RELEASE.jar:3.0.5.RELEASE]
+	at org.springframework.batch.core.job.AbstractJob.execute(AbstractJob.java:306) [spring-batch-core-3.0.5.RELEASE.jar:3.0.5.RELEASE]
+	at org.springframework.batch.core.launch.support.SimpleJobLauncher$1.run(SimpleJobLauncher.java:135) [spring-batch-core-3.0.5.RELEASE.jar:3.0.5.RELEASE]
+	at org.springframework.core.task.SyncTaskExecutor.execute(SyncTaskExecutor.java:50) [spring-core-4.1.6.RELEASE.jar:4.1.6.RELEASE]
+	at org.springframework.batch.core.launch.support.SimpleJobLauncher.run(SimpleJobLauncher.java:128) [spring-batch-core-3.0.5.RELEASE.jar:3.0.5.RELEASE]
+	at com.who.tlv.mars.core.taskmanager.TaskExecutor.runTask(TaskExecutor.java:238) [who-mars-core-8.0.0-SNAPSHOT.jar:na]
+	at com.who.tlv.mars.core.taskmanager.TaskExecutor.runTask(TaskExecutor.java:436) [who-mars-core-8.0.0-SNAPSHOT.jar:na]
+	at com.who.tlv.mars.core.scheduler.SchedulerQuartzJob.executeInternal(SchedulerQuartzJob.java:78) [who-mars-core-8.0.0-SNAPSHOT.jar:na]
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75) [spring-context-support-4.1.6.RELEASE.jar:4.1.6.RELEASE]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213) [quartz-2.1.7.jar:na]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:557) [quartz-2.1.7.jar:na]
+Caused by: com.who.tlv.foundation.ftp.WHOFtpException: Failed adding private key "/var/lib/jenkins/slaves/workspace/MarketingServices_DeployToQA/Project/Build/Deployment/Product/MarketingServices/webapps/MARS/WEB-INF/classes/privatekeys/mars_sftp_pp1_prvt.der": java.io.FileNotFoundException: /var/lib/jenkins/slaves/workspace/MarketingServices_DeployToQA/Project/Build/Deployment/Product/MarketingServices/webapps/MARS/WEB-INF/classes/privatekeys/mars_sftp_pp1_prvt.der (No such file or directory)
+	at com.who.tlv.foundation.ftp.SftpClient.connect(SftpClient.java:82) ~[who-foundation-8.0.0-SNAPSHOT.jar:na]
+	at com.who.tlv.foundation.ftp.FtpManager.getFileList(FtpManager.java:366) ~[who-foundation-8.0.0-SNAPSHOT.jar:na]
+	at com.who.tlv.mars.services.crm.GetCrmPlayersTask.execute(GetCrmPlayersTask.java:101) ~[who-marketing-services-8.0.0-SNAPSHOT.jar:na]
+	... 26 common frames omitted
+Caused by: com.jcraft.jsch.JSchException: java.io.FileNotFoundException: /var/lib/jenkins/slaves/workspace/MarketingServices_DeployToQA/Project/Build/Deployment/Product/MarketingServices/webapps/MARS/WEB-INF/classes/privatekeys/mars_sftp_pp1_prvt.der (No such file or directory)
+	at com.jcraft.jsch.IdentityFile.newInstance(IdentityFile.java:98) ~[jsch-0.1.48.jar:na]
+	at com.jcraft.jsch.JSch.addIdentity(JSch.java:355) ~[jsch-0.1.48.jar:na]
+	at com.jcraft.jsch.JSch.addIdentity(JSch.java:315) ~[jsch-0.1.48.jar:na]
+	at com.who.tlv.foundation.ftp.SftpClient.connect(SftpClient.java:78) ~[who-foundation-8.0.0-SNAPSHOT.jar:na]
+	... 28 common frames omitted
+Caused by: java.io.FileNotFoundException: /var/lib/jenkins/slaves/workspace/MarketingServices_DeployToQA/Project/Build/Deployment/Product/MarketingServices/webapps/MARS/WEB-INF/classes/privatekeys/mars_sftp_pp1_prvt.der (No such file or directory)
+	at java.io.FileInputStream.open0(Native Method) ~[na:1.8.0_65]
+	at java.io.FileInputStream.open(FileInputStream.java:195) ~[na:1.8.0_65]
+	at java.io.FileInputStream.<init>(FileInputStream.java:138) ~[na:1.8.0_65]
+	at java.io.FileInputStream.<init>(FileInputStream.java:93) ~[na:1.8.0_65]
+	at com.jcraft.jsch.IdentityFile.newInstance(IdentityFile.java:83) ~[jsch-0.1.48.jar:na]
+	... 31 common frames omitted
+2015-12-27 00:00:00,265 [quartzSchedulerFactory_Worker-33] [DEBUG] [com.who.tlv.mars.core.readers.WHOJpaPagingItemReader:192] - 0 Items were found.
+2015-12-27 00:00:00,270 [SimpleAsyncTaskExecutor-548517] [DEBUG] [com.who.tlv.mars.rss.RssDataDao:495] - Getting Payment Status from RSS with parameters: paymentId=9508
+2015-12-27 00:00:00,282 [quartzSchedulerFactory_Worker-1] [DEBUG] [com.who.tlv.mars.services.payments.readers.PaymentsTransactionIntervalReader:209] - Attribute:PaymentsReaderServiceToTransactionNum with Value:12049
+2015-12-27 00:00:00,283 [quartzSchedulerFactory_Worker-19] [INFO ] [com.who.tlv.mars.core.writers.AWriter:61] - About to execute task writer. taskName: VegasItalyWageringCalculationTask , writerName:VegasItalyWageringWriter , serviceName:ItalyVegasBonusService
+2015-12-27 00:00:00,284 [quartzSchedulerFactory_Worker-47] [INFO ] [com.who.tlv.mars.core.readers.AReader:80] - About to execute reader for task. taskName: RegisterVegasItalyAdHocDepositPlayersTask , readerName:VegasItalyReader , serviceName:ItalyVegasBonusService , marsTaskId: 449821 , numberOfTaskParameters: 4
+2015-12-27 00:00:00,285 [quartzSchedulerFactory_Worker-11] [DEBUG] [com.who.tlv.mars.services.bonusengine.readers.DepositsReader:126] - The Attribute RegisterVegasItalyFirstDepositPlayersTaskLastDateRun:GeneralAttributes [attributeName=RegisterVegasItalyFirstDepositPlayersTaskLastDateRun, attributeValue=2015-12-25_13_33_00]
+2015-12-27 00:00:00,285 [quartzSchedulerFactory_Worker-11] [INFO ] [com.who.tlv.mars.services.bonusengine.readers.DepositsReader:134] - About to execute reader for task. taskName: RegisterVegasItalyFirstDepositPlayersTask , readerName:VegasItalyReader , serviceName:ItalyVegasBonusService
+2015-12-27 00:00:00,285 [quartzSchedulerFactory_Worker-11] [DEBUG] [com.who.tlv.mars.services.bonusengine.readers.DepositsReader:155] - readPaymentsFromDatabase: fromDate:Fri Dec 25 13:33:00 GMT 2015, toDate:Sun Dec 27 00:00:00 GMT 2015
+2015-12-27 00:00:00,285 [quartzSchedulerFactory_Worker-11] [DEBUG] [com.who.tlv.mars.services.bonusengine.readers.DepositsReader:156] - readPaymentsFromDatabase: countries:[IT], channels:[A]
+2015-12-27 00:00:00,285 [quartzSchedulerFactory_Worker-11] [DEBUG] [com.who.tlv.mars.services.bonusengine.readers.DepositsReader:158] - readPaymentsFromDatabase: onlyFirstDeposits:false
+2015-12-27 00:00:00,288 [quartzSchedulerFactory_Worker-30] [DEBUG] [com.who.tlv.mars.core.bonus.processors.AFilterProcessor:115] - About to execute filter processor. filterProcessorName: ClaimBonusDateFilter , serviceName: ItalyVegasBonusService , marsTaskId: 449822
+2015-12-27 00:00:00,297 [quartzSchedulerFactory_Worker-47] [DEBUG] [com.who.tlv.mars.services.bonusengine.readers.DepositsReader:126] - The Attribute RegisterVegasItalyAdHocDepositPlayersTaskLastDateRun:GeneralAttributes [attributeName=RegisterVegasItalyAdHocDepositPlayersTaskLastDateRun, attributeValue=2015-12-25_13_33_00]
+2015-12-27 00:00:00,297 [quartzSchedulerFactory_Worker-47] [INFO ] [com.who.tlv.mars.services.bonusengine.readers.DepositsReader:134] - About to execute reader for task. taskName: RegisterVegasItalyAdHocDepositPlayersTask , readerName:VegasItalyReader , serviceName:ItalyVegasBonusService
+2015-12-27 00:00:00,297 [quartzSchedulerFactory_Worker-47] [DEBUG] [com.who.tlv.mars.services.bonusengine.readers.DepositsReader:155] - readPaymentsFromDatabase: fromDate:Fri Dec 25 13:33:00 GMT 2015, toDate:Sun Dec 27 00:00:00 GMT 2015
+2015-12-27 00:00:00,297 [quartzSchedulerFactory_Worker-47] [DEBUG] [com.who.tlv.mars.services.bonusengine.readers.DepositsReader:156] - readPaymentsFromDatabase: countries:[IT], channels:[A]
+2015-12-27 00:00:00,298 [quartzSchedulerFactory_Worker-47] [DEBUG] [com.who.tlv.mars.services.bonusengine.readers.DepositsReader:158] - readPaymentsFromDatabase: onlyFirstDeposits:false
+2015-12-27 00:00:00,299 [quartzSchedulerFactory_Worker-11] [DEBUG] [com.who.tlv.mars.services.bonusengine.readers.DepositsReader:139] - 0 players were found.
+2015-12-27 00:00:00,301 [quartzSchedulerFactory_Worker-1] [DEBUG] [com.who.tlv.mars.services.payments.readers.TransactionIntervalIterator:28] - Init TransactionIntervalIterator:minTransactionID:12049, maxTransactionID:12049, transactionsInChunk:1500
+2015-12-27 00:00:00,301 [quartzSchedulerFactory_Worker-1] [DEBUG] [com.who.tlv.mars.services.payments.processors.PaymentsReaderFromRSS:71] - PlayersWithDepositReader.beforeStep started.
+2015-12-27 00:00:00,319 [quartzSchedulerFactory_Worker-47] [DEBUG] [com.who.tlv.mars.services.bonusengine.readers.DepositsReader:139] - 0 players were found.
+2015-12-27 00:00:00,326 [quartzSchedulerFactory_Worker-30] [DEBUG] [com.who.tlv.mars.core.bonus.processors.AFilterProcessor:115] - About to execute filter processor. filterProcessorName: DulpicateActiveWageringForServiceNameFilter , serviceName: ItalyVegasBonusService , marsTaskId: 449822
+2015-12-27 00:00:00,340 [quartzSchedulerFactory_Worker-11] [DEBUG] [com.who.tlv.mars.core.bonus.processors.AFilterProcessor:115] - About to execute filter processor. filterProcessorName: VegasItalyFDPromoCodeFilter , serviceName: ItalyVegasBonusService , marsTaskId: null
+2015-12-27 00:00:00,361 [SimpleAsyncTaskExecutor-548519] [DEBUG] [com.who.tlv.mars.core.readers.WHOJpaPagingItemReader:109] - readItems list is empty
+2015-12-27 00:00:00,366 [quartzSchedulerFactory_Worker-11] [DEBUG] [com.who.tlv.mars.core.bonus.processors.AFilterProcessor:115] - About to execute filter processor. filterProcessorName: VegasItalySignUpFilter , serviceName: ItalyVegasBonusService , marsTaskId: null
+2015-12-27 00:00:00,367 [quartzSchedulerFactory_Worker-13] [INFO ] [com.who.tlv.mars.core.taskmanager.TaskExecutor:356] - Start retry execution for task. task name: GetVegasItalyCrmPlayersTask
+2015-12-27 00:00:00,371 [quartzSchedulerFactory_Worker-13] [DEBUG] [com.who.tlv.mars.core.taskmanager.TaskExecutor:381] - Task execution is about to sleep for 600000 millisecond between retries. retry attempt number :1
+2015-12-27 00:00:00,381 [SimpleAsyncTaskExecutor-548521] [DEBUG] [com.who.tlv.mars.core.readers.WHOJpaPagingItemReader:109] - readItems list is empty
+2015-12-27 00:00:00,381 [SimpleAsyncTaskExecutor-548521] [DEBUG] [com.who.tlv.mars.core.readers.WHOJpaPagingItemReader:109] - ohad ohado had 
