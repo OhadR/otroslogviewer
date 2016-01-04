@@ -8,19 +8,15 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>    
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
 
-	<script src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
-	<link rel="stylesheet"
-	     href="https://cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css" />
-
-
 	<script type="text/javascript" src="./JS/weblogger.js"></script>
 	 
 	 <!--Include Touch Punch file to provide support for touch devices>
 	 <script type="text/javascript" src="path to touch-punch.js" ></script-->   
 	 
 	 <!--ParamQuery Grid files-->
-	 <!-- link rel="stylesheet" href="paramquery_grid/pqgrid.min.css" />
-	 <script type="text/javascript" src="paramquery_grid/pqgrid.min.js" ></script-->  
+	 <link rel="stylesheet" href="paramquery_grid/pqgrid.dev.css" />
+	 <link rel="stylesheet" href="paramquery_grid/some.css" />
+	 <script type="text/javascript" src="paramquery_grid/pqgrid.min.js" ></script>  
 	 
 	 
 	 <meta charset="ISO-8859-1">
@@ -28,41 +24,7 @@
 </head>
 
 <body>
-	<!-- div id="grid_array"></div-->
-
-	<table id="grid_array" class="display" cellspacing="0" width="100%">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Position</th>
-                <th>Office</th>
-                <th>Age</th>
-                <th>Start date</th>
-                <th>Salary</th>
-            </tr>
-        </thead>
-        <tfoot>
-            <tr>
-                <th>Name</th>
-                <th>Position</th>
-                <th>Office</th>
-                <th>Age</th>
-                <th>Start date</th>
-                <th>Salary</th>
-            </tr>
-        </tfoot>
-        <tbody>
-            <tr>
-                <td>Tiger Nixon</td>
-                <td>System Architect</td>
-                <td>Edinburgh</td>
-                <td>61</td>
-                <td>2011/04/25</td>
-                <td>$320,800</td>
-            </tr>
-         </tbody>
-	</table>
-	
+	<div id="grid_array"></div>
 	<button onclick="getLogDataFromOtros()">Click me</button></body>
 	
 	<a href="#" onclick="performClick('theFile');">Open file dialog</a>
