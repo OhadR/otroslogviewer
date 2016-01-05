@@ -138,7 +138,7 @@ function performClick(elemId)
 		elem.dispatchEvent(evt);
 		
 		logFileToTail =  elem.value ;
-		logFileToTail = "c:/MARS_pattern.log";
+//		logFileToTail = "c:/MARS_pattern.log";
 		
 		setLogDataToTail();
 	}
