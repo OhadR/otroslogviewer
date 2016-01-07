@@ -43,7 +43,7 @@ public class CacheHolder implements InitializingBean
 			{
 				logDataColl = (LogData[])element.getObjectValue();
 				
-				log.debug( "logData was read from cache: " + logDataColl);
+				log.debug( "logData was read from cache: " + logDataColl.length + "entries.");
 				boolean removed = cache.remove( logFileName );			
 			}
 		}

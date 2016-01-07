@@ -96,8 +96,8 @@
 	</appender>
 
 
-	<!-- logger category="com.lftechnology.sbworkbench">
-	    <level name="ERROR"/-->
+	<!-- for EHCACHE, do not show 'debug' messages, only 'info' an up: -->
+	<logger name="net.sf.ehcache" level="INFO" />
 
 		
 	<!-- =================================================================== -->
