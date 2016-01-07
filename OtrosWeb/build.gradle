@@ -3,12 +3,9 @@ apply plugin: 'war'
 apply plugin: 'eclipse-wtp'
 
 eclipse {
-//TODO	pathVariables 'GRADLE_HOME': file('C:/Java/gradle-2.4'), 'TOMCAT_HOME': file('C:/Java/apache-tomcat-7.0.62')
 	wtp {
 	  component {
 	  	deployName = 'who-otros-web'
-//		resource deployPath: '/', sourcePath: '/MARS'
-		resource deployPath: '/WEB-INF/classes', sourcePath: '/Configuration'
 		
 		property name: 'context-root', value:'OtrosWeb'
         property name: 'java-output-path', value: '/OtrosWeb/classes'	
@@ -16,7 +13,6 @@ eclipse {
 	  
 	  facet {
 	  	facets = facets
-    	//facet name: 'jst.web', version: '2.5'
       	facet name: 'jst.java', version: '6.0'
       }
 	}
@@ -56,57 +52,11 @@ dependencies {
 	
 	compile "org.aspectj:aspectjtools:1.8.6"
 
-/*	compile "log4j:log4j:1.2.17"
 
-	
-	compile "com.fasterxml.jackson.datatype:jackson-datatype-json-org:2.5.4"
-
-	compile "org.apache.httpcomponents:httpclient:$http_client_version"
-	compile "org.apache.httpcomponents:httpcore:$http_core_version"
-	compile "org.apache.httpcomponents:httpmime:$http_mime_version"
-
-	compile "org.objenesis:objenesis:2.1"
-	
-	compile "net.sf.opencsv:opencsv:2.3"
-	
-	compile "net.lingala.zip4j:zip4j:1.3.2"
-
-	compile "com.google.guava:guava:18.0"
-
-	compile "org.hibernate:hibernate-core:4.3.10.Final"
-	compile "org.hibernate:hibernate-entitymanager:4.3.10.Final"
-	compile "org.hibernate.common:hibernate-commons-annotations:5.0.0.Final"
-	compile "org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final"
-	*/
-/*
-	compile "commons-codec:commons-codec:1.7"
-	compile "commons-collections:commons-collections:3.2.1"
-	compile "commons-dbcp:commons-dbcp:1.4"
-	compile "commons-io:commons-io:2.4"
-	compile "commons-pool:commons-pool:1.6"
-	compile "commons-net:commons-net:3.2"*/
 	runtime "commons-logging:commons-logging:1.2"
 
-	/*compile "com.jcraft:jsch:0.1.48"
 
-	//	compile "com.google.api-client:google-api-client:1.18.0-rc"
-	//	//compile "com.google.api-ads:ads-lib-axis:1.31.0"
-	//	compile "com.google.api-ads:adwords-axis:1.31.0"
 
-	compile "com.google.api-client:google-api-client:1.20.0"
-	compile "com.google.api-ads:adwords-axis:2.2.0"
-	
-	compile "org.codehaus.jettison:jettison:1.3.7"
-
-	compile "org.eclipse.jetty:jetty-http:9.3.0.v20150612"
-	compile "org.eclipse.jetty:jetty-io:9.3.0.v20150612"
-//	compile "org.eclipse.jetty:jetty-util:9.3.0.v20150612"
-	
-	compile "org.eclipse.jetty:jetty-websocket:8.1.17.v20150415"
-
-	compile "org.eclipse.persistence:org.eclipse.persistence.core:2.6.0"
-	compile "org.eclipse.persistence:org.eclipse.persistence.moxy:2.6.0"
-	*/
 	compile "com.sun.jersey:jersey-core:1.19"
 	compile "com.sun.jersey:jersey-client:1.19"
 	compile "com.sun.jersey:jersey-server:1.19"
@@ -121,25 +71,19 @@ dependencies {
 	
 }
 
+
 sourceSets {
 	main {
 		java { 
 		}
 		resources {
-		}
-	}
-	test {
-		java { 
+			srcDir '$projectDir/../src/main/resources/'
 		}
 	}
 }
 
-
-
 war {
 	baseName = 'otros-web'
-	
-//	classpath = jar.outputs.files + configurations.runtime - configurations.providedRuntime
 	
     manifest {
         attributes(
