@@ -4,6 +4,7 @@ var set_log_file_url = 	'./secured/setLogFile';
 //set the timer:
 var myVar = setInterval(getLogDataFromOtros, 4000);
 var logFileToTail;
+var clientId;
 
 var tableRowCounter=1;
 
@@ -85,7 +86,9 @@ function getLogDataFromOtros()
 		url : get_log_data_url,
 		type: 'GET',
 		dataType: 'text',
-		data: {	logFilePath : logFileToTail },
+		data: {	
+			logFilePath : logFileToTail,
+			clientIdentifier : clientId },
 		success: function(response)
 		{
 			populateResult(response);
@@ -155,7 +158,7 @@ function setLogDataToTail()
 		data: {	logFilePath : logFileToTail },
 		success: function(response)
 		{
-			populateResult(response);
+			clientId = response;
 		}
 	});
 };

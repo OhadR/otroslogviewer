@@ -33,7 +33,7 @@ public class Tester {
 	@Test
 	public void testMyLogReader()
 	{
-        logReader.setLogFile( "c:/MARS_pattern.log" );
+        logReader.startTailingFile( "c:/MARS_pattern.log" );
 	}
 	
 	

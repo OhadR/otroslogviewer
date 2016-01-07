@@ -39,6 +39,14 @@ public class OtrosWebController
 	}
 
 
+    /**
+     * the response to client contains the thread-id that tails the file. the client uses this id as identifier upon calling
+     * {link @getLogDataFromCache}
+     * 
+     * @param logFilePath
+     * @param response
+     * @throws IOException
+     */
     @RequestMapping(value = "/secured/setLogFile", method = RequestMethod.POST)
     protected void setLogFile(
             @RequestParam String logFilePath,
@@ -46,11 +54,12 @@ public class OtrosWebController
     {  
     	log.debug("setLogFile is called, for file: " + logFilePath);
     	
-    	logReader.setLogFile( logFilePath );
+    	long clientIdentifier = logReader.startTailingFile( logFilePath );
     	
     	//PrintWriter writer = response.getWriter();
     	response.setContentType("text/html"); 
 		response.setStatus(HttpServletResponse.SC_OK);
+		response.getWriter().println( clientIdentifier );
     }
     
     
@@ -58,6 +67,7 @@ public class OtrosWebController
     @RequestMapping(value = "/secured/getLogDataFromCache", method = RequestMethod.GET)
     protected void getLogDataFromCache(
             @RequestParam String logFilePath,
+            @RequestParam long clientIdentifier,
             HttpServletResponse response) throws IOException 
     {  
     	log.debug("getLogDataFromCache is called, for file: " + logFilePath);
@@ -65,7 +75,7 @@ public class OtrosWebController
     	PrintWriter writer = response.getWriter();
 
         log.debug("reading from cache...");
-    	LogData[] logDataColl = readLogDataFromCache( logFilePath );
+    	LogData[] logDataColl = readLogDataFromCache( clientIdentifier );
         log.debug("reading from cache finished");
 
         log.debug("converting from cache to json...");
@@ -96,9 +106,9 @@ public class OtrosWebController
 	}
 	*/
 	
-	private LogData[] readLogDataFromCache( String logFilePath )
+	private LogData[] readLogDataFromCache( Long clientIdentifier )
 	{
-		LogData[] logDataColl = cacheHolder.readLogDataFromCache( logFilePath );
+		LogData[] logDataColl = cacheHolder.readLogDataFromCache( clientIdentifier );
 
 		return logDataColl;
 	}

@@ -1,5 +1,7 @@
 package com.ohadr.otros.core;
 
+import java.io.Serializable;
+
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
@@ -27,24 +29,35 @@ public class CacheHolder implements InitializingBean
         cache = cacheManager.addCacheIfAbsent( OtrosConstants.CACHE_NAME );
 	}
 
-	public void writeLogDataToCache(String logFileName, LogData[] logData)
+	/**
+	 * 
+	 * @param sessionIdentifier - the identifier of the caller-session. built from thread-id (old versions used the logFileName)
+	 * @param logData
+	 */
+	void writeLogDataToCache(Serializable sessionIdentifier, LogData[] logDataColl)
 	{
-	    cache.put(new Element(logFileName, logData));
+		log.debug( "writing to cache, identifier= " + sessionIdentifier + ", " + logDataColl.length + "entries.");
+	    cache.put(new Element(sessionIdentifier, logDataColl));
 	}
 
 	
-	public LogData[] readLogDataFromCache( String logFileName )
+	/**
+	 * 
+	 * @param sessionIdentifier - the identifier of the caller-session. built from thread-id (old versions used the logFileName)
+	 * @return
+	 */
+	public LogData[] readLogDataFromCache( Serializable sessionIdentifier )
 	{
 		LogData[] logDataColl = null;
 		try
 		{
-			Element element = cache.get( logFileName );
+			Element element = cache.get( sessionIdentifier );
 			if( element != null )
 			{
 				logDataColl = (LogData[])element.getObjectValue();
 				
-				log.debug( "logData was read from cache: " + logDataColl.length + "entries.");
-				boolean removed = cache.remove( logFileName );			
+				log.debug( "logData was read from cache, identifier= " + sessionIdentifier + ", " + logDataColl.length + "entries.");
+				boolean removed = cache.remove( sessionIdentifier );			
 			}
 		}
 		catch(Exception e)

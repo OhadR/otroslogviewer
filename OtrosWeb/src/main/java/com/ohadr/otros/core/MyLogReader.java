@@ -68,7 +68,7 @@ public class MyLogReader implements InitializingBean
 		} 
 		catch (FileSystemException e1) 
 		{
-			log.error("reslving file " + logFilePath + " error: " + e1);
+			log.error("resolving file " + logFilePath + " error: " + e1);
 			return null;
 		}
 
@@ -94,6 +94,8 @@ public class MyLogReader implements InitializingBean
 
 		while (parsingContext.isParsingInProgress())
         {
+//    		log.debug("while loop, thread: " + Thread.currentThread().getName() + "; thread-id=" + Thread.currentThread().getId() );
+    		
         	importer.importLogs( openFileObject.getContentInputStream(), dataCollector, parsingContext );
 //        	importer.importLogs( in, dataCollector, parsingContext );
     	    LogData[] logData = dataCollector.getLogData();
@@ -102,7 +104,7 @@ public class MyLogReader implements InitializingBean
             if(logData.length > 0)
             {
         		log.debug("writing to cache, " + logData.length + " log-lines...");
-        	    cacheHolder.writeLogDataToCache( logFilePath, logData );
+        	    cacheHolder.writeLogDataToCache( Thread.currentThread().getId(), logData );
             }
 
     	    /*
@@ -140,7 +142,12 @@ public class MyLogReader implements InitializingBean
 	}
 	*/	
 	
-	public void setLogFile(String logFilePath) 
+	/**
+	 * this method sets the log file path that is to be tailed, and starts tailing it in a different thread.
+	 * @param logFilePath the file to be tailed.
+	 * @return the thread id that is tailing the file.
+	 */
+	public long startTailingFile(String logFilePath) 
 	{
 		log.info("log file is set to: " + logFilePath);
 		this.logFilePath = logFilePath;
@@ -162,5 +169,6 @@ public class MyLogReader implements InitializingBean
 		Thread t = new Thread(r, "Log reader-" + logFilePath);
 		t.setDaemon(true);
 		t.start();
+		return t.getId();
 	}
 }
