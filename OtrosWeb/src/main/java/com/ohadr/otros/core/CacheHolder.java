@@ -36,13 +36,21 @@ public class CacheHolder implements InitializingBean
 	public LogData[] readLogDataFromCache( String logFileName )
 	{
 		LogData[] logDataColl = null;
-		Element element = cache.get( logFileName );
-		if( element != null )
+		try
 		{
-			logDataColl = (LogData[])element.getObjectValue();
-			
-			log.debug( "logData was read from cace: " + logDataColl);
-			boolean removed = cache.remove( logFileName );			
+			Element element = cache.get( logFileName );
+			if( element != null )
+			{
+				logDataColl = (LogData[])element.getObjectValue();
+				
+				log.debug( "logData was read from cache: " + logDataColl);
+				boolean removed = cache.remove( logFileName );			
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			log.error("ERROR on readLogDataFromCache " + e);			
 		}
 		
 		return logDataColl;

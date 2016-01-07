@@ -68,27 +68,31 @@ public class MyLogReader implements InitializingBean
 		} 
 		catch (FileSystemException e1) 
 		{
+			log.error("reslving file " + logFilePath + " error: " + e1);
 			return null;
 		}
 
 		LoadingInfo openFileObject = null;
 		try 
 	    {
+			log.debug("trying to open file " + resolveFile + "...");
 			openFileObject = Utils.openFileObject(resolveFile, true);	//true is for tail mode.
 		}
 	    catch (Exception e) 
 	    {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}	//tailing!!
-
+			log.error("failed to open file " + resolveFile, e);
+			return null;
+		}	
+		
+		//now we are tailing!!
 	    
 	    Log4jPatternMultilineLogParser parser = new Log4jPatternMultilineLogParser();
 		LogImporterUsingParser importer = new LogImporterUsingParser( parser );
 		importer.init(p);
 	    importer.initParsingContext(parsingContext);
 
-        while (parsingContext.isParsingInProgress())
+		while (parsingContext.isParsingInProgress())
         {
         	importer.importLogs( openFileObject.getContentInputStream(), dataCollector, parsingContext );
 //        	importer.importLogs( in, dataCollector, parsingContext );
@@ -97,6 +101,7 @@ public class MyLogReader implements InitializingBean
     	    
             if(logData.length > 0)
             {
+        		log.debug("writing to cache, " + logData.length + " log-lines...");
         	    cacheHolder.writeLogDataToCache( logFilePath, logData );
             }
 
@@ -113,16 +118,15 @@ public class MyLogReader implements InitializingBean
             
         }
 	    
-	    LogData[] logData = dataCollector.getLogData();
+		log.error("AM I REALLY SUPPOSE TO BE HERE??");
+
+		LogData[] logData = dataCollector.getLogData();
 	    return logData;
 	}
 
 	@Override
 	public void afterPropertiesSet() throws Exception 
 	{
-        
- 
-		
 	}
 
 	/*
@@ -138,17 +142,19 @@ public class MyLogReader implements InitializingBean
 	
 	public void setLogFile(String logFilePath) 
 	{
+		log.info("log file is set to: " + logFilePath);
 		this.logFilePath = logFilePath;
 
 		Runnable r = () -> {
+				log.info("*** timer started*** ");
 		    	try 
 		    	{
 					readLogs();
 				}
 		    	catch (ConfigurationException | IOException | InitializationException | InterruptedException e) 
 		    	{
-					// TODO Auto-generated catch block
 					e.printStackTrace();
+					log.error("error on ReadLogs(): " + e);
 				}        	
 		};
 		    

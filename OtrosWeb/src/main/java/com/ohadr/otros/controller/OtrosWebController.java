@@ -22,8 +22,6 @@ import pl.otros.logview.LogData;
 
 
 @Controller
-//@EnableAsync			//to allow @Scheduled
-//@EnableScheduling		//to allow @Scheduled
 public class OtrosWebController
 {
 	private static final org.slf4j.Logger log = LoggerFactory.getLogger(OtrosWebController.class.getName());
@@ -66,9 +64,13 @@ public class OtrosWebController
     	
     	PrintWriter writer = response.getWriter();
 
+        log.debug("reading from cache...");
     	LogData[] logDataColl = readLogDataFromCache( logFilePath );
+        log.debug("reading from cache finished");
 
+        log.debug("converting from cache to json...");
     	String jsonResponse = OtrosUtils.convertToJson( logDataColl );	 
+        log.debug("converting from cache to json finished");
 
     	if( jsonResponse == null )
     	{
@@ -97,7 +99,7 @@ public class OtrosWebController
 	private LogData[] readLogDataFromCache( String logFilePath )
 	{
 		LogData[] logDataColl = cacheHolder.readLogDataFromCache( logFilePath );
-		
+
 		return logDataColl;
 	}
 }
