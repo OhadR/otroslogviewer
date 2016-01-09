@@ -38,7 +38,6 @@ dependencies {
 
    	compile "net.sf.ehcache:ehcache:2.10.0"
       
-   	compile "javax.servlet:javax.servlet-api:3.1.0"
 	compile "javax.servlet.jsp:jsp-api:2.2"
 	compile "jstl:jstl:1.2"
 //	compile "javax.servlet.jsp.jstl:jstl-api:1.2-rev-1"

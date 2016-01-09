@@ -59,18 +59,17 @@ public class OtrosWebController
     	//PrintWriter writer = response.getWriter();
     	response.setContentType("text/html"); 
 		response.setStatus(HttpServletResponse.SC_OK);
-		response.getWriter().println( clientIdentifier );
+		response.getWriter().print( clientIdentifier );
     }
     
     
     
     @RequestMapping(value = "/secured/getLogDataFromCache", method = RequestMethod.GET)
     protected void getLogDataFromCache(
-            @RequestParam String logFilePath,
             @RequestParam long clientIdentifier,
             HttpServletResponse response) throws IOException 
     {  
-    	log.debug("getLogDataFromCache is called, for file: " + logFilePath);
+    	log.debug("getLogDataFromCache is called, for clientIdentifier: " + clientIdentifier);
     	
     	PrintWriter writer = response.getWriter();
 
@@ -79,7 +78,20 @@ public class OtrosWebController
         log.debug("reading from cache finished");
 
         log.debug("converting from cache to json...");
-    	String jsonResponse = OtrosUtils.convertToJson( logDataColl );	 
+    	String jsonResponse = null;
+		try 
+		{
+			jsonResponse = OtrosUtils.convertToJson( logDataColl );
+		} 
+		catch (Error e) 
+		{
+	        log.error("converting from cache to json failed, " + e);
+
+	    	response.setContentType("text/html"); 
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			
+			return;
+		}	 
         log.debug("converting from cache to json finished");
 
     	if( jsonResponse == null )
@@ -108,8 +120,6 @@ public class OtrosWebController
 	
 	private LogData[] readLogDataFromCache( Long clientIdentifier )
 	{
-		LogData[] logDataColl = cacheHolder.readLogDataFromCache( clientIdentifier );
-
-		return logDataColl;
+		return cacheHolder.readLogDataFromCache( clientIdentifier );
 	}
 }

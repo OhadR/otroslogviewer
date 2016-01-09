@@ -4,7 +4,7 @@ var set_log_file_url = 	'./secured/setLogFile';
 //set the timer:
 var myVar = setInterval(getLogDataFromOtros, 4000);
 var logFileToTail;
-var clientId;
+var clientId = 0;
 
 var tableRowCounter=1;
 
@@ -86,9 +86,7 @@ function getLogDataFromOtros()
 		url : get_log_data_url,
 		type: 'GET',
 		dataType: 'text',
-		data: {	
-			logFilePath : logFileToTail,
-			clientIdentifier : clientId },
+		data: {	clientIdentifier : clientId },
 		success: function(response)
 		{
 			populateResult(response);
@@ -100,7 +98,8 @@ function getLogDataFromOtros()
 function populateResult(response)
 {
 	var logDataArray = JSON.parse( response );
-
+	//console.log('populating ' + logDataArray.length + 'lines, ' + new Date().getTime() / 1000);
+	var startTime = new Date().getTime();
 	var i;
 	for(i=0; i< logDataArray.length; ++i)
 	{
@@ -114,6 +113,9 @@ function populateResult(response)
 
 		scrollToBottom();
 	}
+	var endTime = new Date().getTime();
+	var duration = endTime - startTime;
+	console.log('writing to grid ' + logDataArray.length + ' lines, took ' + duration/1000 + 'secs');
 	
 
 };
@@ -141,7 +143,6 @@ function performClick(elemId)
 		elem.dispatchEvent(evt);
 		
 		logFileToTail =  elem.value ;
-//		logFileToTail = "c:/MARS_pattern.log";
 		
 		setLogDataToTail();
 	}

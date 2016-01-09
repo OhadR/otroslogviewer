@@ -13,8 +13,14 @@
     <mvc:default-servlet-handler />
     <mvc:annotation-driven />
     
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="classpath:otros-web.properties"/>
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+    </bean>
     
+        
   	<bean class="org.springframework.web.servlet.view.BeanNameViewResolver"/>
+  	
 	<bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
         <property name="prefix" value="/WEB-INF/jsp/" />

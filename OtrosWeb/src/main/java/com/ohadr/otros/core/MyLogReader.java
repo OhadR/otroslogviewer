@@ -45,7 +45,15 @@ public class MyLogReader implements InitializingBean
 	logFilePath = catalinaHome + "/logs/MARS_pattern.log"
 	 * 
 	 */
-	public LogData[] readLogs() throws IOException, InitializationException, ConfigurationException, InterruptedException
+	/**
+	 * reads a file in tail mode, and put the parsed data in cache.
+	 * @return
+	 * @throws IOException
+	 * @throws InitializationException
+	 * @throws ConfigurationException
+	 * @throws InterruptedException
+	 */
+	private LogData[] readLogs() throws IOException, InitializationException, ConfigurationException, InterruptedException
 	{
 
 	    Properties p = new Properties();
