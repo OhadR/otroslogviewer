@@ -2,22 +2,12 @@ var get_log_data_url = 	'./secured/getLogDataFromCache';
 var set_log_file_url = 	'./secured/setLogFile';
 
 //set the timer:
-var myVar = setInterval(getLogDataFromOtros, 4000);
+var myVar = setInterval(getLogDataFromOtros, 1500);
 var logFileToTail;
 var clientId = 0;
 
 var tableRowCounter=1;
 
-$(function(){
-
-     $("#add_row").click(function()
-	 {
-		 addRowToGrid('ff');
-//      $('#addr'+i).html("<td>"+ (i+1) +"</td><td><input name='name"+i+"' type='text' placeholder='Name' class='form-control input-md'  /> </td><td><input  name='mail"+i+"' type='text' placeholder='Mail'  class='form-control input-md'></td><td><input  name='mobile"+i+"' type='text' placeholder='Mobile'  class='form-control input-md'></td>");
-
-	});
-	
-});	 
 
 function addRowToGrid(date, 
 					level,
@@ -98,41 +88,44 @@ function getLogDataFromOtros()
 function populateResult(response)
 {
 	var logDataArray = JSON.parse( response );
-	//console.log('populating ' + logDataArray.length + 'lines, ' + new Date().getTime() / 1000);
+	if( logDataArray.length > 0 )
+		console.log('starting to populate ' + logDataArray.length + ' lines...');
+	
 	var startTime = new Date().getTime();
 	var i;
 	for(i=0; i< logDataArray.length; ++i)
 	{
 		var obj = logDataArray[i];
 
-		addRowToGrid( obj.date, 
+		addRowToGrid( new Date( obj.date ).toISOString(), 
 					obj.level.name,
 					obj.message,
 					obj.clazz,
 					obj.thread);
 
-		scrollToBottom();
 	}
+	scrollToBottom();
+
 	var endTime = new Date().getTime();
 	var duration = endTime - startTime;
-	console.log('writing to grid ' + logDataArray.length + ' lines, took ' + duration/1000 + 'secs');
-	
 
+	if( logDataArray.length > 0 )
+		console.log('writing to grid ' + logDataArray.length + ' lines, took ' + duration/1000 + 'secs');
+	
 };
 
-//Test
-function addLineToGrid() 
-{
-	var index = $( "#grid_array" ).pqGrid( "addRow", 
-		    {rowData:  [20000,  'xxxxxxxxXXX',  5.0,  5.0] }
-		);
-	//commit all add, update and delete operations.            
-//	$( "#grid_array" ).pqGrid( "commit" );
 
-	//select 3rd row
-	$( "#grid_array" ).pqGrid( "setSelection", {rowIndx:index} );
-		
-}
+//Test
+$(function(){
+
+    $("#add_row").click(function()
+	 {
+		 addRowToGrid('ff');
+//     $('#addr'+i).html("<td>"+ (i+1) +"</td><td><input name='name"+i+"' type='text' placeholder='Name' class='form-control input-md'  /> </td><td><input  name='mail"+i+"' type='text' placeholder='Mail'  class='form-control input-md'></td><td><input  name='mobile"+i+"' type='text' placeholder='Mobile'  class='form-control input-md'></td>");
+
+	});
+	
+});	 
 
 function performClick(elemId) 
 {
@@ -165,7 +158,7 @@ function setLogDataToTail()
 };
 
 function scrollToBottom(){
-	$('#moshe').scrollTop(1000000);
-
-   
+	//$('#moshe').scrollTop(1000000);
+	var height = $('#moshe')[0].scrollHeight;
+	$('#moshe').scrollTop(height);
 }

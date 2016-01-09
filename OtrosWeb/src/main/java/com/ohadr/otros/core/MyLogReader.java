@@ -104,7 +104,9 @@ public class MyLogReader implements InitializingBean
         {
 //    		log.debug("while loop, thread: " + Thread.currentThread().getName() + "; thread-id=" + Thread.currentThread().getId() );
     		
-        	importer.importLogs( openFileObject.getContentInputStream(), dataCollector, parsingContext );
+            Utils.reloadFileObject( openFileObject );
+
+            importer.importLogs( openFileObject.getContentInputStream(), dataCollector, parsingContext );
 //        	importer.importLogs( in, dataCollector, parsingContext );
     	    LogData[] logData = dataCollector.getLogData();
     	    dataCollector.clear();
@@ -115,17 +117,7 @@ public class MyLogReader implements InitializingBean
         	    cacheHolder.writeLogDataToCache( Thread.currentThread().getId(), logData );
             }
 
-    	    /*
-    	    for(int i = 0; i < logData.length; ++i)
-    	    {
-        	    System.out.println("@@@@ " + logData[i]);    	    	
-    	    }
-    	    */
-
             Thread.sleep(1000);
-
-            Utils.reloadFileObject( openFileObject );
-            
         }
 	    
 		log.error("AM I REALLY SUPPOSE TO BE HERE??");
@@ -174,7 +166,7 @@ public class MyLogReader implements InitializingBean
 		};
 		    
 		    
-		Thread t = new Thread(r, "Log reader-" + logFilePath);
+		Thread t = new Thread( r );
 		t.setDaemon(true);
 		t.start();
 		return t.getId();

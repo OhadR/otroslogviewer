@@ -141,6 +141,7 @@ public class Utils {
     long lastFileSize = loadingInfo.getLastFileSize();
     long currentSize = loadingInfo.getFileObject().getContent().getSize();
     if (currentSize > lastFileSize) {
+	      LOGGER.debug("currentSize: " + currentSize + " > lastFileSize: " + lastFileSize + ", re-opening file");
       IOUtils.closeQuietly(loadingInfo.getObserableInputStreamImpl());
 
       RandomAccessContent randomAccessContent = loadingInfo.getFileObject().getContent().getRandomAccessContent(RandomAccessMode.READ);
@@ -154,6 +155,7 @@ public class Utils {
         loadingInfo.setContentInputStream(observableStream);
       }
     } else if (currentSize < lastFileSize) {
+	      LOGGER.debug("currentSize: " + currentSize + " < lastFileSize: " + lastFileSize );
       IOUtils.closeQuietly(loadingInfo.getObserableInputStreamImpl());
       InputStream inputStream = loadingInfo.getFileObject().getContent().getInputStream();
       ObservableInputStreamImpl observableStream = new ObservableInputStreamImpl(inputStream);
