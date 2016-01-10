@@ -88,8 +88,10 @@ function getLogDataFromOtros()
 function populateResult(response)
 {
 	var logDataArray = JSON.parse( response );
-	if( logDataArray.length > 0 )
-		console.log('starting to populate ' + logDataArray.length + ' lines...');
+	if( logDataArray.length == 0 )
+		return;
+
+	console.log('starting to populate ' + logDataArray.length + ' lines...');
 	
 	var startTime = new Date().getTime();
 	var i;
@@ -109,8 +111,7 @@ function populateResult(response)
 	var endTime = new Date().getTime();
 	var duration = endTime - startTime;
 
-	if( logDataArray.length > 0 )
-		console.log('writing to grid ' + logDataArray.length + ' lines, took ' + duration/1000 + 'secs');
+	console.log('writing to grid ' + logDataArray.length + ' lines, took ' + duration/1000 + 'secs');
 	
 };
 
