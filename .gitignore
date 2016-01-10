@@ -1,5 +1,4 @@
 /classpath.txt
-.gradle
 .*.sw?
 *~
 *.bak
@@ -10,3 +9,9 @@ build
 /gradle-app.setting
 **/*.iml
 **/.idea
+**/bin/
+.classpath
+.project
+*.prefs
+.gradle/*
+**/.settings/
