@@ -28,22 +28,26 @@
         <th>#</th>
         <th>timestamp</th>
         <th>level</th>
+        <th>class</th>
         <th>message</th>
         <th>thread</th>
       </tr>
     </thead>
     <tbody>
       <tr class="success">
+        <td>111</td>
         <td>John</td>
         <td>Doe</td>
         <td>john@example.com</td>
       </tr>
       <tr class="danger">
+        <td>112</td>
         <td>Mary</td>
         <td>Moe</td>
         <td>mary@example.com</td>
       </tr>
       <tr class="info">
+        <td>113</td>
         <td>July</td>
         <td>Dooley</td>
         <td>july@example.com</td>
@@ -52,13 +56,17 @@
   </table>
   </div>
 
-	<button onclick="getLogDataFromOtros()">Click me</button></body>
+	<!-- for test purposes: do what the timer does anyway - call AJAX to get log data
+	<button onclick="getLogDataFromOtros()">Get Log Lines</button></body>
+	 -->
 	
-	<a href="#" onclick="performClick('theFile');">Open file dialog</a>
+	<a href="#" onclick="performClick('theFile');">GO</a>
 	<!-- input type="file" id="theFile" /-->	
 	<input type="text" id="theFile" value='c:/MARS_pattern.log' />
 	
 	<!-- for test purposes: 
 	<a id="add_row" class="btn btn-default pull-left">Add Row</a>
 	 -->
+	<input type="checkbox" id="pause_tailing" > Pause Tailing<br>
+	 
 </html>

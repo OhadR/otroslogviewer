@@ -30,7 +30,7 @@ function addRowToGrid(date,
 	{
 		$('#tab_logic').append('<tr id="tr_id_'+ (tableRowCounter) +'"></tr>');
 	}
-	$('#tr_id_' + tableRowCounter).html("<td>"+  tableRowCounter +"</td><td>" + date + "</td><td>" + level + "</td><td>" + message + "</td><td>" + thread + "</td>");
+	$('#tr_id_' + tableRowCounter).html("<td>"+  tableRowCounter +"</td><td>" + date + "</td><td>" + level + "</td><td>" + clazz + "</td><td>" + message + "</td><td>" + thread + "</td>");
 	++tableRowCounter; 
 	
 }
@@ -98,15 +98,21 @@ function populateResult(response)
 	for(i=0; i< logDataArray.length; ++i)
 	{
 		var obj = logDataArray[i];
+		var lineDate = new Date( obj.date );
+		
 
-		addRowToGrid( new Date( obj.date ).toISOString(), 
-					obj.level.name,
-					obj.message,
-					obj.clazz,
-					obj.thread);
+		addRowToGrid( 
+				lineDate.toISOString().slice(11, -1), //-1 to eliminate the Z.
+				obj.level.name,
+				obj.message,
+				obj.clazz,
+				obj.thread);
 
 	}
-	scrollToBottom();
+	if( ! $('#pause_tailing').is(':checked') )
+	{
+		scrollToBottom();
+	}
 
 	var endTime = new Date().getTime();
 	var duration = endTime - startTime;
