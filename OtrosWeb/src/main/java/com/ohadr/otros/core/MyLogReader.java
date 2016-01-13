@@ -1,6 +1,8 @@
 package com.ohadr.otros.core;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import org.apache.commons.configuration.ConfigurationException;
@@ -36,6 +38,9 @@ public class MyLogReader implements InitializingBean
 	private CacheHolder cacheHolder;
 
 	private String logFilePath;
+	
+	//TODO use Spring's thread pool manager?
+	private List<Long> threadsIds = new ArrayList<Long>();
 
     
 /* TODO: handle threads. there should be 2 threads, look in TailLogAction...
@@ -168,7 +173,13 @@ public class MyLogReader implements InitializingBean
 		    
 		Thread t = new Thread( r );
 		t.setDaemon(true);
+		threadsIds.add( t.getId() );
 		t.start();
 		return t.getId();
+	}
+	
+	public int getNumThreads()
+	{
+		return threadsIds.size();
 	}
 }

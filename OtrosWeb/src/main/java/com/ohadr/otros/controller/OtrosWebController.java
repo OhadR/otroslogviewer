@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ohadr.otros.OtrosUtils;
+import com.ohadr.otros.OtrosWebStatus;
 import com.ohadr.otros.core.CacheHolder;
 import com.ohadr.otros.core.MyLogReader;
 
@@ -107,6 +108,25 @@ public class OtrosWebController
     }
 
 
+    /**
+     * returns the status of cache, and how many thread are running etc.
+     * @param response
+     * @throws IOException
+     */
+    @RequestMapping(value = "/getBackendStatus", method = RequestMethod.GET)
+    protected void getBackendStatus(
+            HttpServletResponse response) throws IOException 
+    {  
+    	OtrosWebStatus status = cacheHolder.getStatus();
+    	status.numThreads = logReader.getNumThreads();    	
+
+		String jsonResponse = OtrosUtils.convertToJson( status );
+
+    	//PrintWriter writer = response.getWriter();
+    	response.setContentType("text/html"); 
+		response.setStatus(HttpServletResponse.SC_OK);
+		response.getWriter().print( jsonResponse );
+    }
 	
 /*
  * 	@Scheduled(fixedDelay=1000)

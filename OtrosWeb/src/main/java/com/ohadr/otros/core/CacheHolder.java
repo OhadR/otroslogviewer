@@ -7,12 +7,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.ohadr.otros.OtrosConstants;
+import com.ohadr.otros.OtrosWebStatus;
 
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
@@ -171,6 +173,20 @@ public class CacheHolder implements InitializingBean
 		}
 		
 		return logDataColl;
+	}
+
+	public OtrosWebStatus getStatus() 
+	{
+		OtrosWebStatus status = new OtrosWebStatus();
+		for(Map.Entry<Serializable, List<Integer>> entry : sessionChunksMap.entrySet())
+		{
+			status.clientToChunk.add( Pair.of(entry.getKey(), entry.getValue().size()) );
+			
+		}
+		
+		status.numElementsInCache = cache.getSize();	// num of Elements both diskStore and memStore
+
+		return status;
 	}
 
 }

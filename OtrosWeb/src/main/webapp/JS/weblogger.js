@@ -1,5 +1,6 @@
 var get_log_data_url = 	'./secured/getLogDataFromCache';
 var set_log_file_url = 	'./secured/setLogFile';
+var get_baclend_status_url = './getBackendStatus';
 
 //set the timer:
 var myVar = setInterval(getLogDataFromOtros, 1500);
@@ -168,4 +169,18 @@ function scrollToBottom(){
 	//$('#moshe').scrollTop(1000000);
 	var height = $('#moshe')[0].scrollHeight;
 	$('#moshe').scrollTop(height);
+}
+
+function getBackendStatus()
+{
+	//AJAX call to get the password policy:
+	$.ajax({
+		url : get_baclend_status_url,
+		type: 'GET',
+		dataType: 'text',
+		success: function(response)
+		{
+			populateStatus(response);
+		}
+	});
 }
