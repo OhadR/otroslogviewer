@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+
+
+	
+	<!-- =================================================================== -->
+	<!-- Marketing Services application log configuration -->
+	<!-- =================================================================== -->
+
+	<appender name="MARS" class="ch.qos.logback.core.rolling.RollingFileAppender">		
+
+		<file>logs/otros-web-tests.log</file>
+		
+		<encoder>
+			<pattern>%d [%thread] [%-5level] [%C:%L] - %m%n</pattern>
+		</encoder>
+
+       <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <fileNamePattern>logs/otros-web-tests-%i.log</fileNamePattern>
+            <minIndex>1</minIndex>
+            <maxIndex>10</maxIndex>
+        </rollingPolicy>
+
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>5MB</maxFileSize>
+        </triggeringPolicy>
+		
+				
+	</appender>
+
+
+
+	<!-- =================================================================== -->
+	<!-- Console log configuration -->
+	<!-- =================================================================== -->
+
+	<appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>ERROR</level>
+		</filter>
+
+		<!-- filter class="com.who.tlv.foundation.logging.MarsLogFilter">
+			<loggerName>com.who.tlv</loggerName>
+			<match>DENY</match>
+			<mismatch>NEUTRAL</mismatch>
+		</filter-->
+
+		<encoder>
+			<pattern>%d [%-5level] [%C:%L] - %m%n</pattern>
+		</encoder>
+	</appender>
+
+
+	<!-- for EHCACHE, do not show 'debug' messages, only 'info' an up: -->
+	<logger name="net.sf.ehcache" level="INFO" />
+
+	<logger name="com.ohadr.otros.controller" level="INFO" />
+		
+	<!-- =================================================================== -->
+	<!-- List of all available appenders -->
+	<!-- =================================================================== -->
+
+	<root level="DEBUG">
+		<appender-ref ref="Console" />
+		<appender-ref ref="MARS" />		
+	</root>
+
+
+</configuration>

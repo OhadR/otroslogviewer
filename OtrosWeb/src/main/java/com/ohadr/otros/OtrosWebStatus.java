@@ -15,5 +15,10 @@ public class OtrosWebStatus
 	// num of Elements both diskStore and memStore
 	public int numElementsInCache;	
 
-	public int numThreads;	
+	public int numThreads;
+	
+	public String toString()
+	{
+		return "numElementsInCache: " + numElementsInCache + ", numThreads: " + numThreads;
+	}
 }
