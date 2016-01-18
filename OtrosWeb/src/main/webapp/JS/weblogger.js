@@ -1,6 +1,7 @@
 var get_log_data_url = 	'./secured/getLogDataFromCache';
 var set_log_file_url = 	'./secured/setLogFile';
 var get_baclend_status_url = './getBackendStatus';
+var notify_client_leave_url = './secured/clientLeftPage';
 
 //set the timer:
 var myVar = setInterval(getLogDataFromOtros, 1500);
@@ -184,3 +185,28 @@ function getBackendStatus()
 		}
 	});
 }
+
+
+window.onbeforeunload = function () 
+{
+	console.log('onbeforeunload');
+   return "Do you really want to close?";
+};
+
+
+$(window).unload(function () 
+{
+	console.log('onunload');
+	//notify server that the client leaves:
+    $.ajax({
+		url : notify_client_leave_url,
+		async: false,		//makes the magic happen
+		type: 'POST',
+		dataType: 'text',
+		data: {	clientIdentifier : clientId },
+		success: function(response)
+		{
+			populateStatus(response);
+		}
+	});
+});

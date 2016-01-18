@@ -188,5 +188,35 @@ public class CacheHolder implements InitializingBean
 
 		return status;
 	}
+	
+	/**
+	 * we need to remove from the cache all entries that are stored for this client, plus
+	 * remove his entries from the sessions-map 
+	 */
+	public void removeClient(Serializable clientIdentifier) 
+	{
+		List<Integer> chunksColl = sessionChunksMap.remove( clientIdentifier );
+		if( chunksColl == null )
+		{
+			String msg = "removeClientEntries did not find identifier= " + clientIdentifier + " in the chunks map";
+			log.error( msg );
+			throw new IllegalArgumentException( msg );
+		}
+		log.debug( clientIdentifier + " was removed from sessionChunksMap." );
+		
+		//now delete all entries of this client from cache:
+		for(Integer chunkId : chunksColl)
+		{
+			String elementId = clientIdentifier + "_" + chunkId;
+			log.debug( clientIdentifier + " removing elementId= " + elementId + " from cache." );
+			boolean removed = cache.remove( elementId );
+			if( !removed )
+			{
+				log.error("removeClientEntries did not find Element in the cache with id= " + elementId );
+			}
+			
+		}
 
+		log.info("client " + clientIdentifier + " was removed successfully from cache." );
+	}
 }

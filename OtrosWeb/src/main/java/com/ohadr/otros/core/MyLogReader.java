@@ -11,7 +11,6 @@ import org.apache.commons.vfs2.FileSystemException;
 import org.apache.commons.vfs2.FileSystemManager;
 import org.apache.commons.vfs2.VFS;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -30,7 +29,7 @@ import pl.otros.logview.reader.ProxyLogDataCollector;
 @Component
 @EnableAsync			//to allow @Scheduled
 @EnableScheduling		//to allow @Scheduled
-public class MyLogReader implements InitializingBean 
+public class MyLogReader
 {
 	private static final org.slf4j.Logger log = LoggerFactory.getLogger(MyLogReader.class.getName());
 	
@@ -82,6 +81,7 @@ public class MyLogReader implements InitializingBean
 		catch (FileSystemException e1) 
 		{
 			log.error("resolving file " + logFilePath + " error: " + e1);
+			removeCurrentThreadFromCollection();
 			return null;
 		}
 
@@ -93,11 +93,13 @@ public class MyLogReader implements InitializingBean
 		}
 	    catch (Exception e) 
 	    {
-			// TODO Auto-generated catch block
 			log.error("failed to open file " + resolveFile, e);
+			removeCurrentThreadFromCollection();
 			return null;
 		}	
 		
+	    long threadId = Thread.currentThread().getId();
+
 		//now we are tailing!!
 	    
 	    Log4jPatternMultilineLogParser parser = new Log4jPatternMultilineLogParser();
@@ -105,7 +107,7 @@ public class MyLogReader implements InitializingBean
 		importer.init(p);
 	    importer.initParsingContext(parsingContext);
 
-		while (parsingContext.isParsingInProgress())
+		while (parsingContext.isParsingInProgress() && threadsIds.contains( threadId ))
         {
 //    		log.debug("while loop, thread: " + Thread.currentThread().getName() + "; thread-id=" + Thread.currentThread().getId() );
     		
@@ -119,21 +121,34 @@ public class MyLogReader implements InitializingBean
             if(logData.length > 0)
             {
         		log.debug("writing to cache, " + logData.length + " log-lines...");
-        	    cacheHolder.writeLogDataToCache( Thread.currentThread().getId(), logData );
+				cacheHolder.writeLogDataToCache( threadId, logData );
             }
 
             Thread.sleep(1000);
         }
 	    
-		log.error("AM I REALLY SUPPOSE TO BE HERE??");
+		//we are here when the client closed the browser, so the thread-id was removed from the list of thread-ids:
+		log.warn("thread id " + threadId + " stopped.");
 
+		removeCurrentThreadFromCollection();
 		LogData[] logData = dataCollector.getLogData();
 	    return logData;
 	}
 
-	@Override
-	public void afterPropertiesSet() throws Exception 
+
+	private void removeCurrentThreadFromCollection() 
 	{
+		Long threadId = Thread.currentThread().getId();
+		removeThreadFromCollection( threadId );
+	}
+
+	private void removeThreadFromCollection(Long threadId) 
+	{
+        log.info("removeThreadFromCollection, for threadId: " + threadId);
+		synchronized (threadsIds) 
+		{
+			threadsIds.remove( threadId );
+		}
 	}
 
 	/*
@@ -173,7 +188,10 @@ public class MyLogReader implements InitializingBean
 		    
 		Thread t = new Thread( r );
 		t.setDaemon(true);
-		threadsIds.add( t.getId() );
+		synchronized (threadsIds) 
+		{
+			threadsIds.add( t.getId() );
+		}
 		t.start();
 		return t.getId();
 	}
@@ -181,5 +199,12 @@ public class MyLogReader implements InitializingBean
 	public int getNumThreads()
 	{
 		return threadsIds.size();
+	}
+
+
+	public void stopClientThread(long clientIdentifier) 
+	{
+		//remove the client-identifier (which is the thread-id) from the list, that will stop the thread:
+		removeThreadFromCollection( clientIdentifier );	
 	}
 }

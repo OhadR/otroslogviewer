@@ -127,6 +127,22 @@ public class OtrosWebController
 		response.setStatus(HttpServletResponse.SC_OK);
 		response.getWriter().print( jsonResponse );
     }
+    
+    @RequestMapping(value = "/secured/clientLeftPage", method = RequestMethod.POST)
+    protected void onClientLeftPage(
+            @RequestParam long clientIdentifier,
+            HttpServletResponse response) 
+    {  
+        log.info("onClientLeftPage, for clientIdentifier: " + clientIdentifier);
+        
+        // kill threads of this client
+        logReader.stopClientThread( clientIdentifier );
+        
+		cacheHolder.removeClient( clientIdentifier );
+
+    	response.setContentType("text/html"); 
+		response.setStatus(HttpServletResponse.SC_OK);
+    }
 	
 /*
  * 	@Scheduled(fixedDelay=1000)
