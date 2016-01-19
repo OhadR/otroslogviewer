@@ -16,6 +16,8 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Component;
 
+import com.ohadr.otros.OtrosWebStatus;
+
 import pl.otros.logview.LogData;
 import pl.otros.logview.importer.InitializationException;
 import pl.otros.logview.importer.LogImporterUsingParser;
@@ -206,5 +208,21 @@ public class MyLogReader
 	{
 		//remove the client-identifier (which is the thread-id) from the list, that will stop the thread:
 		removeThreadFromCollection( clientIdentifier );	
+		
+		cacheHolder.removeClient( clientIdentifier );
+	}
+
+
+	public OtrosWebStatus getStatus() 
+	{
+    	OtrosWebStatus status = cacheHolder.getStatus();
+    	status.numThreads = getNumThreads(); 
+    	return status;
+	}
+
+
+	public LogData[] readLogDataFromCache(Long clientIdentifier) 
+	{
+		return cacheHolder.readLogDataFromCache( clientIdentifier );
 	}
 }

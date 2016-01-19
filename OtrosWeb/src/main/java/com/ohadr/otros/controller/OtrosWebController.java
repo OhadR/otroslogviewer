@@ -28,9 +28,6 @@ public class OtrosWebController
 	private static final org.slf4j.Logger log = LoggerFactory.getLogger(OtrosWebController.class.getName());
 
 	@Autowired
-	private CacheHolder cacheHolder;
-
-	@Autowired
 	MyLogReader logReader;
 
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
@@ -121,8 +118,7 @@ public class OtrosWebController
     protected void getBackendStatus(
             HttpServletResponse response) throws IOException 
     {  
-    	OtrosWebStatus status = cacheHolder.getStatus();
-    	status.numThreads = logReader.getNumThreads();    	
+    	OtrosWebStatus status = logReader.getStatus();
 
 		String jsonResponse = OtrosUtils.convertToJson( status );
 
@@ -147,10 +143,9 @@ public class OtrosWebController
     }
 
 
-	private void onClientLeave(long clientIdentifier) {
+	private void onClientLeave(long clientIdentifier) 
+	{
 		logReader.stopClientThread( clientIdentifier );
-        
-		cacheHolder.removeClient( clientIdentifier );
 	}
 	
 /*
@@ -165,6 +160,6 @@ public class OtrosWebController
 	
 	private LogData[] readLogDataFromCache( Long clientIdentifier )
 	{
-		return cacheHolder.readLogDataFromCache( clientIdentifier );
+		return logReader.readLogDataFromCache( clientIdentifier );
 	}
 }
