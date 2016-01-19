@@ -51,10 +51,14 @@ public class OtrosWebController
     @RequestMapping(value = "/secured/setLogFile", method = RequestMethod.POST)
     protected void setLogFile(
             @RequestParam String logFilePath,
+            @RequestParam long oldClientIdentifier,
             HttpServletResponse response) throws IOException 
     {  
-    	log.debug("setLogFile is called, for file: " + logFilePath);
+    	log.info("setLogFile is called, for file: " + logFilePath + ", with old clientId=" + oldClientIdentifier + "; removing old entries for this client...");
     	
+        // kill threads of this client
+        onClientLeave(oldClientIdentifier);
+
     	long clientIdentifier = logReader.startTailingFile( logFilePath );
     	
     	//PrintWriter writer = response.getWriter();
@@ -136,13 +140,18 @@ public class OtrosWebController
         log.info("onClientLeftPage, for clientIdentifier: " + clientIdentifier);
         
         // kill threads of this client
-        logReader.stopClientThread( clientIdentifier );
-        
-		cacheHolder.removeClient( clientIdentifier );
+        onClientLeave(clientIdentifier);
 
     	response.setContentType("text/html"); 
 		response.setStatus(HttpServletResponse.SC_OK);
     }
+
+
+	private void onClientLeave(long clientIdentifier) {
+		logReader.stopClientThread( clientIdentifier );
+        
+		cacheHolder.removeClient( clientIdentifier );
+	}
 	
 /*
  * 	@Scheduled(fixedDelay=1000)

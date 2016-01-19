@@ -158,7 +158,9 @@ function setLogDataToTail()
 		url : set_log_file_url,
 		type: 'POST',
 		dataType: "text",
-		data: {	logFilePath : logFileToTail },
+		data: {	
+			logFilePath : logFileToTail,
+			oldClientIdentifier : clientId },
 		success: function(response)
 		{
 			clientId = response;

@@ -193,14 +193,14 @@ public class CacheHolder implements InitializingBean
 	 * we need to remove from the cache all entries that are stored for this client, plus
 	 * remove his entries from the sessions-map 
 	 */
-	public void removeClient(Serializable clientIdentifier) 
+	public boolean removeClient(Serializable clientIdentifier) 
 	{
 		List<Integer> chunksColl = sessionChunksMap.remove( clientIdentifier );
 		if( chunksColl == null )
 		{
 			String msg = "removeClientEntries did not find identifier= " + clientIdentifier + " in the chunks map";
 			log.error( msg );
-			throw new IllegalArgumentException( msg );
+			return false;
 		}
 		log.debug( clientIdentifier + " was removed from sessionChunksMap." );
 		
@@ -218,5 +218,6 @@ public class CacheHolder implements InitializingBean
 		}
 
 		log.info("client " + clientIdentifier + " was removed successfully from cache." );
+		return true;
 	}
 }
