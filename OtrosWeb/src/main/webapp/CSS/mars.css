@@ -15,5 +15,5 @@
 
 /*  the only way to override bootstrap 's settings is this way: (td only is not enough)  */
 .table tbody tr td {
-	padding: 4px;
+	padding: 1px;
 }

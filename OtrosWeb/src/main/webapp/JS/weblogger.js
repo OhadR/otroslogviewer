@@ -28,6 +28,10 @@ function addRowToGrid(date,
 	{
 		$('#tab_logic').append('<tr class="danger" id="tr_id_'+ tableRowCounter +'"></tr>');
 	}
+	else if(level == 'WARN')
+	{
+		$('#tab_logic').append('<tr class="warning" id="tr_id_'+ tableRowCounter +'"></tr>');
+	}
 	else
 	{
 		$('#tab_logic').append('<tr id="tr_id_'+ (tableRowCounter) +'"></tr>');
