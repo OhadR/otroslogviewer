@@ -52,17 +52,10 @@ dependencies {
 	
 	compile "org.aspectj:aspectjtools:1.8.6"
 
-
 	runtime "commons-logging:commons-logging:1.2"
 
-
-
-	compile "com.sun.jersey:jersey-core:1.19"
-	compile "com.sun.jersey:jersey-client:1.19"
-	compile "com.sun.jersey:jersey-server:1.19"
-	compile "com.sun.jersey:jersey-json:1.19"
-	compile "com.sun.jersey:jersey-servlet:1.19"
-	compile "com.sun.jersey.contribs:jersey-spring:1.19"
+    compile "org.codehaus.jackson:jackson-core-asl:1.9.2"
+    compile "org.codehaus.jackson:jackson-mapper-asl:1.9.2"
 	
 	compile "com.googlecode.json-simple:json-simple:1.1.1"	
 		
