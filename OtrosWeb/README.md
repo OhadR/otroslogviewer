@@ -3,11 +3,11 @@ Useful software for analysing applications logs and traces.
 
 ## Issues:
 * [DONE] if client does not read from cache - data is not deleted from the cache. so it will blow. need to detect disconnected clients and remove their entries
-sleep between writes of chunks, to let clients read in between.
+* sleep between writes of chunks, to let clients read in between.
 * [DONE] when a client asks for a file, stop other threads that were created for this client.
-UI - smaller font in the table.
-* [DONE] visualizer to cache status - how many entries and threads - backend
-visualizer to cache status - how many entries and threads - front end
+* UI - smaller font in the table.
+* [DONE] visualizer to cache status - how many entries and threads - *backend*
+* visualizer to cache status - how many entries and threads - *front end*
 * [DONE] if cannot open file - close thread (easy)
 * [DONE] show "WARN" in yellow (same as ERROR in red)
 * [DONE] loading huge log files - show client only 50K recent lines, not all lines (could be 1.5M lines!, will take 10 minutes to load everything to UI)
