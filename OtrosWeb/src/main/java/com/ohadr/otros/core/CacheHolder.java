@@ -94,7 +94,7 @@ public class CacheHolder implements InitializingBean
 			chunksColl = new ArrayList<Integer>();
 			sessionChunksMap.put(sessionIdentifier, chunksColl);
 		}
-		// TODO generate chunk-id:
+
 		int chunkId = ++chunks_counter ;
 				//LongGenerator.;//of apache
 
@@ -134,24 +134,33 @@ public class CacheHolder implements InitializingBean
 	{
 		LogData[] logDataColl = null;
 		
-		if( ! sessionChunksMap.containsKey(sessionIdentifier) )
+		List<Integer> chunksColl = sessionChunksMap.get( sessionIdentifier );
+		if( chunksColl == null || chunksColl.isEmpty() )
 		{
 			//no need to log this, as this is a normal situation that happens periodically and will blow up the log:
 			//log.info( "readLogDataFromCache did not find identifier= " + sessionIdentifier + " in the chunks map");
+			//the client sends periodic requests for new data. but if there is no new data, the cache is empty:
 			return null;
 		}
 		
 		//no need to log this, as this is a normal situation that happens periodically and will blow up the log:
 		// log.info( "readLogDataFromCache finds identifier= " + sessionIdentifier + " in the chunks map.");
 		
-		List<Integer> chunksColl = sessionChunksMap.get( sessionIdentifier );
-		if(chunksColl.isEmpty())
+		//I allow only 50 K log-lines to be stored. if the log file is huge (>100M, >500Kline) then I
+		//assume it is irrelevant to load ALL file (this is not log analyzer, but log viewer!) - so we load only the latest 50Klines.
+		//so tailing works and we will get the newest lines, but not ALL old lines will be loaded to UI.
+		int numChunks = chunksColl.size();
+		int MAX_CHUNKS_ALLOWED_PER_CLIENT = OtrosConstants.MAX_LOG_LINES_STORED_PER_CLIENT/MAX_LOG_DATA_ENTRIES_PER_CHUNK;	
+
+		if(numChunks > MAX_CHUNKS_ALLOWED_PER_CLIENT)
 		{
-			//the client sends periodic requests for new data. but if there is no new data, the cache is empty:
-			return null;
+			log.warn( "chunksColl of clientID " + sessionIdentifier + " is too big, #entries: " + chunksColl.size() );
+			//remove chunks but leave the latest MAX_CHUNKS_ALLOWED_PER_CLIENT:
+			List<Integer> subListToRemove = chunksColl.subList(0, numChunks-MAX_CHUNKS_ALLOWED_PER_CLIENT);
+			chunksColl.removeAll( subListToRemove );
+			log.warn( numChunks-MAX_CHUNKS_ALLOWED_PER_CLIENT + " items were removed from chunksColl. max chunk allowed: " + MAX_CHUNKS_ALLOWED_PER_CLIENT );
 		}
 		
-		//Integer chunkId = chunksColl.get( 0 );
 		Integer chunkId = chunksColl.remove( 0 );
 		String elementId = sessionIdentifier + "_" + chunkId;
 
