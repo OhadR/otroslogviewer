@@ -13,10 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.ohadr.otros.NormalizedStatistics;
 import com.ohadr.otros.OtrosUtils;
 import com.ohadr.otros.OtrosWebStatus;
-import com.ohadr.otros.core.CacheHolder;
 import com.ohadr.otros.core.MyLogReader;
+import com.ohadr.otros.core.StatusManager;
 
 import pl.otros.logview.LogData;
 
@@ -29,6 +30,9 @@ public class OtrosWebController
 
 	@Autowired
 	MyLogReader logReader;
+	
+	@Autowired
+	StatusManager statManager;
 
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
 	public String demo(ModelMap model) throws Exception {
@@ -118,9 +122,9 @@ public class OtrosWebController
     protected void getBackendStatus(
             HttpServletResponse response) throws IOException 
     {  
-    	OtrosWebStatus status = logReader.getStatus();
+    	OtrosWebStatus stats = statManager.getCurrentStatistics();
 
-		String jsonResponse = OtrosUtils.convertToJson( status );
+		String jsonResponse = OtrosUtils.convertToJson( stats );
 
     	//PrintWriter writer = response.getWriter();
     	response.setContentType("text/html"); 
@@ -128,6 +132,20 @@ public class OtrosWebController
 		response.getWriter().print( jsonResponse );
     }
     
+    @RequestMapping(value = "/getBackendStatsHistory", method = RequestMethod.GET)
+    protected void getBackendStatsHistory(
+            HttpServletResponse response) throws IOException 
+    {  
+    	NormalizedStatistics stats = statManager.getNormalizedStatsHistory();
+
+		String jsonResponse = OtrosUtils.convertToJson( stats );
+
+    	//PrintWriter writer = response.getWriter();
+    	response.setContentType("text/html"); 
+		response.setStatus(HttpServletResponse.SC_OK);
+		response.getWriter().print( jsonResponse );
+    }
+
     @RequestMapping(value = "/secured/clientLeftPage", method = RequestMethod.POST)
     protected void onClientLeftPage(
             @RequestParam long clientIdentifier,
