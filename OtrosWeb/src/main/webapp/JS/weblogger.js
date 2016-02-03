@@ -178,6 +178,7 @@ function scrollToBottom(){
 	$('#moshe').scrollTop(height);
 }
 
+/*
 function getBackendStatus()
 {
 	//AJAX call to get the password policy:
@@ -191,6 +192,7 @@ function getBackendStatus()
 		}
 	});
 }
+*/
 
 
 window.onbeforeunload = function () 
@@ -212,7 +214,7 @@ $(window).unload(function ()
 		data: {	clientIdentifier : clientId },
 		success: function(response)
 		{
-			populateStatus(response);
+
 		}
 	});
 });
