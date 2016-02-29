@@ -198,8 +198,21 @@ function getBackendStatus()
 window.onbeforeunload = function () 
 {
 	console.log('onbeforeunload');
-   return "Do you really want to close?";
+	return "Do you really want to close?";
 };
+
+function processForm()
+{
+	var selected = get('selectedFiles');
+	var moshe = $('#theFile');
+	$('#theFile').val( selected );
+}
+
+function get(name)
+{
+	if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search))
+		return decodeURIComponent(name[1]);
+}
 
 
 $(window).unload(function () 
